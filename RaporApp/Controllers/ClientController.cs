@@ -34,5 +34,27 @@ namespace RaporApp.Controllers
 
             return await ActionOutput<RaporRequestModel>.GenerateAsync(200, true, data: output.Data);
         }
+
+
+
+        [HttpGet]
+        [Route("get-list-rapor")]
+        public async Task<IActionResult> GetList()
+        {
+            ServiceOutput<List<RaporModel>> output = await HttpService.GetAllRapor();
+
+            return await ActionOutput<List<RaporModel>>.GenerateAsync<List<RaporModel>>(200, true, data: output.Data);
+        }
+
+
+
+        [HttpGet]
+        [Route("get-by-id-rapor")]
+        public async Task<IActionResult> GetRapor(Guid raporId)
+        {
+            ServiceOutput<RaporModel> output = await HttpService.GetRaporDetail(raporId);
+
+            return await ActionOutput<RaporModel>.GenerateAsync<RaporModel>(200, true, data: output.Data);
+        }
     }
 }

@@ -53,5 +53,92 @@ namespace Core.Helpers
                 }
             }
         }
+
+        public async Task<ServiceOutput<List<RaporModel>>> GetAllRapor()
+        {
+            string apiUrl = baseURL + "Rapor/get-list";
+
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                try
+                {
+
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
+
+                    HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        var result = JsonConvert.DeserializeObject<ServiceOutput<List<RaporModel>>>(content);
+                        if (result != null)
+                        {
+                            if (result.Data != null && result.Data.Count() > 0)
+                            {
+                                return result;
+                            }
+
+                        }
+
+                        return new ServiceOutput<List<RaporModel>> { Data = new List<RaporModel>() };
+                    }
+                    else
+                    {
+                        var error = response.StatusCode;
+                        return new ServiceOutput<List<RaporModel>> { Data = new List<RaporModel>() };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var error = ex.Message;
+                    return new ServiceOutput<List<RaporModel>> { Data = new List<RaporModel>() };
+                }
+            }
+        }
+
+
+        public async Task<ServiceOutput<RaporModel>> GetRaporDetail(Guid raporId)
+        {
+            string apiUrl = baseURL + $"Rapor/get-by-id?raporId={raporId}";
+
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                try
+                {
+
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, apiUrl);
+
+                    HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        var result = JsonConvert.DeserializeObject<ServiceOutput<RaporModel>>(content);
+                        if (result != null)
+                        {
+                            if (result.Data != null )
+                            {
+                                return result;
+                            }
+
+                        }
+
+                        return new ServiceOutput<RaporModel> { Data = new RaporModel() };
+                    }
+                    else
+                    {
+                        var error = response.StatusCode;
+                        return new ServiceOutput<RaporModel> { Data = new RaporModel() };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var error = ex.Message;
+                    return new ServiceOutput<RaporModel> { Data = new RaporModel() };
+                }
+            }
+        }
     }
 }
