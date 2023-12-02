@@ -1,5 +1,6 @@
 ﻿using Core.Abstract;
 using Core.Models;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Core.Helpers
 {
     public class MessageService: IMessageService
     {
-        public void SendMessage<RaporStatus>(RaporStatus message)
+        public void SendMessage(string message)
         {
             var factory = new ConnectionFactory()
             {
@@ -26,9 +27,9 @@ namespace Core.Helpers
             var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
             channel.QueueDeclare("rapor", durable: false, exclusive: false);
-            var jsonString = JsonSerializer.Serialize(message);
+            var jsonString = JsonConvert.SerializeObject(message);
             var body = Encoding.UTF8.GetBytes(jsonString);
-            channel.BasicPublish("", "rapors", body: body);
+            channel.BasicPublish("", "rapor", body: body);
 
 
 

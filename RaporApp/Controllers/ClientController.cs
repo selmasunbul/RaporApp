@@ -26,11 +26,11 @@ namespace RaporApp.Controllers
         [Route("rapor-request")]
         public async Task<IActionResult> GetRaporRequest(Guid iletisimBilgiTipiId, string icerik)
         {
-            MessageService.SendMessage(new RaporStatus { Status = "hazırlanıyor" });
+            MessageService.SendMessage("hazırlanıyor");
 
             ServiceOutput<RaporRequestModel> output = await HttpService.GetRaporRequest(iletisimBilgiTipiId, icerik);
             if (output.Status)
-                MessageService.SendMessage(new RaporStatus { Status = "tamamlandı" });
+                MessageService.SendMessage("tamamlandı");
 
             return await ActionOutput<RaporRequestModel>.GenerateAsync(200, true, data: output.Data);
         }

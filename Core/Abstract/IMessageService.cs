@@ -8,6 +8,6 @@ namespace Core.Abstract
 {
     public interface IMessageService
     {
-        public void SendMessage<RaporStatus>(RaporStatus message);
+        public void SendMessage(string message);
     }
 }
