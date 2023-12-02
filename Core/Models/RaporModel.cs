@@ -26,11 +26,15 @@ namespace Core.Models
         public string Konum { get; set; } = "";
         public int KisiSayisi { get; set; }
         public int TelefonNoSayisi { get; set; }
-
         public Guid Id { get; set; }
         public Guid? UserId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
+    }
+
+    public class RaporStatus
+    {
+        public string Status { get; set; } = "";
     }
 }

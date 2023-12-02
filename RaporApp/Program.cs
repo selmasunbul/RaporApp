@@ -15,7 +15,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
- builder.Services.AddScoped<IHttpService, HttpService>();
+builder.Services.AddScoped<IHttpService, HttpService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 
 var app = builder.Build();
